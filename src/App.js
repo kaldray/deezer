@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Album from "./pages/Album";
 import Favorite from "./pages/Favoris";
 import Home from "./pages/Home";
 
@@ -9,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/favorite" element={<Favorite />}></Route>
+          <Route path="/favorite" element={<Album />}></Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -14,6 +14,7 @@ import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
   const [favori, setFavori] = useState(false);
+  const [data, setData] = useState([]);
   const selectOption = useRef();
   const artisteInput = useRef();
   useEffect(() => {
@@ -32,52 +33,36 @@ const Home = () => {
     setFavori(!favori);
   };
 
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-  //   fetch(
-  //     `https://cors-anywhere.herokuapp.com/http://api.deezer.com/search/track/autocomplete?limit=1&q=eminem`,
-  //     {
-  //       mode: "no-cors",
-  //       headers: {
-  //         "Access-Control-Allow-Headers":
-  //           "X-Requested-With, Content-Type, Authorization, Origin, Accept, Accept-Encoding",
-  //         "Access-Control-Allow-Origin": "http://localhost:3000/",
-  //         "Access-Control-Allow-Methods": "GET, POST",
-  //       },
-  //     }
-  //   )
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   fetchJsonp(`https://api.deezer.com/search?q=eminem`, {
-  //     mode: "no-cors",
-  //     headers: {
-  //       "Access-Control-Allow-Headers":
-  //         "X-Requested-With, Content-Type, Authorization, Origin, Accept, Accept-Encoding",
-  //       "Access-Control-Allow-Origin": "*",
-  //       "Access-Control-Allow-Methods": "GET, POST",
-  //       "content-type": "application/javascript;charset=utf-8",
-  //     },
-  //   })
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  console.log(valueOption);
+  const onSubmit = (event) => {
+    event.preventDefault();
 
+    fetchJsonp(
+      `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setData(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const convertToMinutes = (duration) => {
+    return (
+      (duration - (duration %= 60)) / 60 +
+      (9 < duration ? ":" : ":0") +
+      duration
+    );
+  };
   return (
     <>
       <Navigation />
       <Container fluid className="mt-5">
         <Row className="justify-content-center">
           <Form
-            // onSubmit={onSubmit}
+            onSubmit={onSubmit}
             className="w-75 d-flex flex-column justify-content-center align-items-center"
           >
             <Form.Group className="mb-3 ">
@@ -106,39 +91,47 @@ const Home = () => {
       </Container>
       <Container style={{ paddingBottom: "5rem" }}>
         <Row>
-          <Col className="d-flex justify-content-center mb-5" sm={12} lg={4}>
-            <Card style={{ width: "20rem" }}>
-              <Card.Img variant="top" src="holder.js/100px180" />
-              <Card.Body>
-                <Card.Title>Titre music</Card.Title>
-                <Card.Text>Artiste</Card.Text>
-                <Card.Text>Durée du son</Card.Text>
-                {favori === true ? (
-                  <HeartFull
-                    onClick={changeFavoriIcon}
-                    style={{ height: "25px", cursor: "pointer" }}
-                  />
-                ) : (
-                  <Heart
-                    onClick={changeFavoriIcon}
-                    style={{ height: "25px", cursor: "pointer" }}
-                  />
-                )}
+          {data &&
+            data.map((data) => (
+              <Col
+                className="d-flex justify-content-center mb-5"
+                sm={12}
+                lg={4}
+                key={data.id}
+              >
+                <Card style={{ width: "20rem" }}>
+                  <Card.Img variant="top" src={data.album.cover_medium} />
+                  <Card.Body>
+                    <Card.Title>{data.title}</Card.Title>
+                    <Card.Text>{data.artist.name}</Card.Text>
+                    <Card.Text>{convertToMinutes(data.duration)}</Card.Text>
+                    {favori === true ? (
+                      <HeartFull
+                        onClick={changeFavoriIcon}
+                        style={{ height: "25px", cursor: "pointer" }}
+                      />
+                    ) : (
+                      <Heart
+                        onClick={changeFavoriIcon}
+                        style={{ height: "25px", cursor: "pointer" }}
+                      />
+                    )}
 
-                <Stack className="mt-3" gap="2">
-                  <Button size="sm" variant="primary">
-                    Ecouter
-                  </Button>
-                  <Button size="sm" variant="primary">
-                    Consulter
-                  </Button>
-                  <Button size="sm" variant="primary">
-                    Voir affiche titre
-                  </Button>
-                </Stack>
-              </Card.Body>
-            </Card>
-          </Col>
+                    <Stack className="mt-3" gap="2">
+                      <Button size="sm" variant="primary">
+                        Ecouter
+                      </Button>
+                      <Button size="sm" variant="primary">
+                        Consulter
+                      </Button>
+                      <Button size="sm" variant="primary">
+                        Voir affiche titre
+                      </Button>
+                    </Stack>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
         </Row>
       </Container>
     </>
