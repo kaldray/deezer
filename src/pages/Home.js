@@ -35,19 +35,35 @@ const Home = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    if (valueOption.option === "Trier les résultats de la recherche par ...") {
+      fetchJsonp(
+        `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setData(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
-    fetchJsonp(
-      `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setData(data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (valueOption.option !== "Trier les résultats de la recherche par ...") {
+      fetchJsonp(
+        `https://api.deezer.com/search?q=${valueOption.artiste}&order=${valueOption.option}&output=jsonp`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setData(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   const convertToMinutes = (duration) => {
     return (
@@ -77,11 +93,11 @@ const Home = () => {
             </Form.Group>
             <Form.Select onChange={handleOptionChange} ref={selectOption}>
               <option>Trier les résultats de la recherche par ...</option>
-              <option value="ALbum">Album</option>
-              <option value="Artiste">Artiste</option>
-              <option value="Musique">Musique</option>
-              <option value="Les plus populaires">Les plus populaires</option>
-              <option value="Les moins populaires">Les moins populaires</option>
+              <option value="ALBUM_ASC">Album</option>
+              <option value="ARTIST_ASC">Artiste</option>
+              <option value="TRACK_ASC">Musique</option>
+              <option value="RATING_ASC">Les plus populaires</option>
+              <option value="RANKING">Rang</option>
             </Form.Select>
             <Button className="m-3" type="submit">
               Rechercher
