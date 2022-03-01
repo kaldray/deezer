@@ -8,9 +8,12 @@ import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import fetchJsonp from "fetch-jsonp";
 import Col from "react-bootstrap/esm/Col";
+import { ReactComponent as Heart } from "../assets/heart-svgrepo-com.svg";
+import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
 
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
+  const [favori, setFavori] = useState(false);
   const selectOption = useRef();
   const artisteInput = useRef();
   useEffect(() => {
@@ -23,6 +26,10 @@ const Home = () => {
       option: selectOption.current.value,
       artiste: artisteInput.current.value,
     });
+  };
+
+  const changeFavoriIcon = () => {
+    setFavori(!favori);
   };
 
   // const onSubmit = (event) => {
@@ -106,7 +113,19 @@ const Home = () => {
                 <Card.Title>Titre music</Card.Title>
                 <Card.Text>Artiste</Card.Text>
                 <Card.Text>Durée du son</Card.Text>
-                <Stack gap="2">
+                {favori === true ? (
+                  <HeartFull
+                    onClick={changeFavoriIcon}
+                    style={{ height: "25px", cursor: "pointer" }}
+                  />
+                ) : (
+                  <Heart
+                    onClick={changeFavoriIcon}
+                    style={{ height: "25px", cursor: "pointer" }}
+                  />
+                )}
+
+                <Stack className="mt-3" gap="2">
                   <Button size="sm" variant="primary">
                     Ecouter
                   </Button>
