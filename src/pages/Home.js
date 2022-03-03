@@ -17,6 +17,12 @@ const Home = () => {
     console.log(selectOption.current.value);
   }, [selectOption]);
 
+  useEffect(() => {
+    if (!localStorage.getItem("favori")) {
+      localStorage.setItem("favori", []);
+    }
+  }, []);
+
   const handleOptionChange = () => {
     setValueOption({
       option: selectOption.current.value,
