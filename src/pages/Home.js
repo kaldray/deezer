@@ -10,18 +10,32 @@ import CardData from "../components/CardData";
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
   const [data, setData] = useState([]);
+  const [isFavori, setIsFavori] = useState(false);
+  const [dataLocalStorage, setDataLocalStorage] = useState([]);
   const selectOption = useRef();
   const artisteInput = useRef();
-  useEffect(() => {
-    console.log(selectOption);
-    console.log(selectOption.current.value);
-  }, [selectOption]);
+  let allFavorites = [];
+  let LocalStorage = useRef();
 
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
       localStorage.setItem("favori", []);
     }
   }, []);
+
+  useEffect(() => {
+    if (dataLocalStorage === null || dataLocalStorage === "") {
+      return;
+    } else {
+      if (
+        localStorage.getItem("favori") !== "" ||
+        localStorage.getItem("option") !== "[]"
+      ) {
+        setDataLocalStorage(JSON.parse(localStorage.getItem("favori")));
+        LocalStorage.current = JSON.parse(localStorage.getItem("favori"));
+      }
+    }
+  }, [data]);
 
   const handleOptionChange = () => {
     setValueOption({
@@ -87,8 +101,8 @@ const Home = () => {
               <option value="ALBUM_ASC">Album</option>
               <option value="ARTIST_ASC">Artiste</option>
               <option value="TRACK_ASC">Musique</option>
-              <option value="RATING_ASC">Les plus populaires</option>
-              <option value="RANKING">Rang</option>
+              <option value="RANKING">Les plus populaires</option>
+              <option value="RATING_ASC">Mieux Notées</option>
             </Form.Select>
             <Button className="m-3" type="submit">
               Rechercher
@@ -98,7 +112,19 @@ const Home = () => {
       </Container>
       <Container style={{ paddingBottom: "5rem" }}>
         <Row>
-          {data && data.map((data) => <CardData key={data.id} data={data} />)}
+          {data &&
+            data.map((data) => (
+              <CardData
+                key={data.id}
+                isFavori={isFavori}
+                data={data}
+                dataLocalStorage={dataLocalStorage}
+                setIsFavori={setIsFavori}
+                LocalStorage={LocalStorage}
+                allFavorites={allFavorites}
+                setDataLocalStorage={setDataLocalStorage}
+              />
+            ))}
         </Row>
       </Container>
     </>

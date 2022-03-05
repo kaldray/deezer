@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
-import { ReactComponent as Heart } from "../assets/heart-svgrepo-com.svg";
-import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { convertToMinutes } from "../utils/convertTime";
+import Heart from "./Heart";
 
-const CardData = (props) => {
-  const { data } = props;
-  const [favori, setFavori] = useState(false);
-  const [dataLocalStorage, setDataLocalStorage] = useState([]);
-  let allFavorites = [];
+const CardData = ({
+  data,
+  LocalStorage,
+  dataLocalStorage,
+  allFavorites,
+  setDataLocalStorage,
+}) => {
+  const [isFavori, setIsFavori] = useState(false);
+
   useEffect(() => {
-    if (dataLocalStorage === null || dataLocalStorage === "undefined") {
-      return;
-    } else {
-      if (
-        dataLocalStorage.find((item) => {
-          return item.id === data.id;
-        })
-      ) {
-        setFavori(true);
-      }
+    if (
+      dataLocalStorage.find((item) => {
+        return item.id === data.id;
+      })
+    ) {
+      setIsFavori(true);
     }
   }, []);
 
-  function changeFavoriIcon() {
-    if (favori === false) {
-      setFavori(!favori);
-      if (localStorage.getItem("favori") === "") {
+  const addOrRemoveFromLocalStorage = (data) => {
+    if (isFavori === false) {
+      setIsFavori(!isFavori);
+      if (
+        localStorage.getItem("favori") === "" ||
+        localStorage.getItem("favori") === "[]"
+      ) {
         allFavorites.push(data);
+        console.log(allFavorites);
         localStorage.setItem("favori", JSON.stringify(allFavorites));
         setDataLocalStorage(JSON.parse(localStorage.getItem("favori")));
       } else if (JSON.parse(localStorage.getItem("favori")).length >= 1) {
@@ -42,27 +46,14 @@ const CardData = (props) => {
           setDataLocalStorage(allFavorites);
         }
       }
-    } else if (favori === true) {
-      setFavori(!favori);
+    } else if (isFavori === true) {
+      setIsFavori(!isFavori);
       allFavorites = JSON.parse(localStorage.getItem("favori"));
       allFavorites = allFavorites.filter((item) => item.id !== data.id);
       localStorage.setItem("favori", JSON.stringify(allFavorites));
       setDataLocalStorage(JSON.parse(localStorage.getItem("favori")));
-      console.log(allFavorites);
     }
-    console.log("click");
-  }
-
-  const convertToMinutes = (duration) => {
-    return (
-      (duration - (duration %= 60)) / 60 +
-      (9 < duration ? ":" : ":0") +
-      duration
-    );
   };
-
-  const goToAlbumpage = () => {};
-
   return (
     <>
       <Col className="d-flex justify-content-center mb-5" sm={12} lg={4}>
@@ -72,20 +63,13 @@ const CardData = (props) => {
             <Card.Title>{data.title}</Card.Title>
             <Card.Text>{data.artist.name}</Card.Text>
             <Card.Text>{convertToMinutes(data.duration)}</Card.Text>
-            {favori === true &&
-            dataLocalStorage.find((item) => {
-              return item.id === data.id;
-            }) ? (
-              <HeartFull
-                onClick={changeFavoriIcon}
-                style={{ height: "25px", cursor: "pointer" }}
-              />
-            ) : (
-              <Heart
-                onClick={changeFavoriIcon}
-                style={{ height: "25px", cursor: "pointer" }}
-              />
-            )}
+            <Heart
+              LocalStorage={LocalStorage}
+              data={data}
+              addOrRemoveFromLocalStorage={addOrRemoveFromLocalStorage}
+              dataLocalStorage={dataLocalStorage}
+              isFavori={isFavori}
+            />
 
             <Stack className="mt-3" gap="2">
               <Link to={`/artist/${data.artist.id}`}>
