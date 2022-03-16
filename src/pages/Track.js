@@ -25,7 +25,6 @@ const Track = () => {
   useEffect(() => {
     if (localStorage.getItem("favori") !== "" && dataTrack !== undefined) {
       let localStorageData = JSON.parse(localStorage.getItem("favori"));
-      console.log(localStorageData);
       let checkIfExist = localStorageData.find((item) => {
         return item.id === dataTrack.id;
       });
@@ -55,7 +54,6 @@ const Track = () => {
     } else if (isFavori === true) {
       setIsFavori(!isFavori);
       favArray = JSON.parse(localStorage.getItem("favori"));
-      console.log(favArray);
       favArray = favArray.filter((item) => item.id !== dataTrack.id);
       localStorage.setItem("favori", JSON.stringify(favArray));
     }

@@ -1,21 +1,17 @@
 import fetchJsonp from "fetch-jsonp";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navigation from "../components/Navbar";
 import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Card from "react-bootstrap/Card";
-import Stack from "react-bootstrap/Stack";
+
 import AlbumCard from "../components/AlbumCard";
 const Album = () => {
   const { id } = useParams();
   const [dataAlbum, setDataAlbum] = useState();
   useEffect(() => {
-    console.log(id);
     fetchJsonp(`https://api.deezer.com/album/${id}&output=jsonp`).then(
       (response) =>
         response.json().then((data) => {
-          console.log(data);
           setDataAlbum(data);
         })
     );

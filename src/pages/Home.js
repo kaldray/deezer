@@ -46,7 +46,7 @@ const Home = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (valueOption.option === "Trier les résultats de la recherche par ...") {
+    if (valueOption.option === "DEFAULT") {
       fetchJsonp(
         `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
       )
@@ -97,7 +97,9 @@ const Home = () => {
               />
             </Form.Group>
             <Form.Select onChange={handleOptionChange} ref={selectOption}>
-              <option>Trier les résultats de la recherche par ...</option>
+              <option value="DEFAULT">
+                Trier les résultats de la recherche par ...
+              </option>
               <option value="ALBUM_ASC">Album</option>
               <option value="ARTIST_ASC">Artiste</option>
               <option value="TRACK_ASC">Musique</option>
