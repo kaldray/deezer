@@ -11,11 +11,9 @@ const Album = () => {
   const { id } = useParams();
   const [dataAlbum, setDataAlbum] = useState();
   useEffect(() => {
-    console.log(id);
     fetchJsonp(`https://api.deezer.com/album/${id}&output=jsonp`).then(
       (response) =>
         response.json().then((data) => {
-          console.log(data);
           setDataAlbum(data);
         })
     );

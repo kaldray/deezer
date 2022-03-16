@@ -1,5 +1,5 @@
 import Navigation from "../components/Navbar";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
@@ -7,7 +7,6 @@ import FavoriteTrack from "../components/FavoriteTrack";
 const Favorite = () => {
   const [getDataFromLocaleStorage, setDataFromLocaleStorage] = useState();
   const [favoriToDelete, setfavoriToDelete] = useState([]);
-  let allFavorites;
 
   useEffect(() => {
     if (
@@ -21,7 +20,7 @@ const Favorite = () => {
   const getItemToDelete = (data) => {
     let itemToDelete = data;
     let dataLocalStorage = JSON.parse(localStorage.getItem("favori"));
-    allFavorites = dataLocalStorage.filter(
+    let allFavorites = dataLocalStorage.filter(
       (item) => item.id !== itemToDelete.id
     );
     setDataFromLocaleStorage(allFavorites);
