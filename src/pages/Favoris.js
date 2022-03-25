@@ -9,10 +9,7 @@ const Favorite = () => {
   const [favoriToDelete, setfavoriToDelete] = useState([]);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("favori") !== "" ||
-      localStorage.getItem("favori") !== "[]"
-    ) {
+    if (localStorage.getItem("favori").length >= 1) {
       setDataFromLocaleStorage(JSON.parse(localStorage.getItem("favori")));
     }
   }, [favoriToDelete]);

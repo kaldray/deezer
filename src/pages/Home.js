@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
-      localStorage.setItem("favori", []);
+      localStorage.setItem("favori", "");
     }
   }, []);
 
@@ -27,12 +27,9 @@ const Home = () => {
     if (dataLocalStorage === null || dataLocalStorage === "") {
       return;
     } else {
-      if (
-        localStorage.getItem("favori") !== "" ||
-        localStorage.getItem("option") !== "[]"
-      ) {
+      if (localStorage.getItem("favori").length >= 1) {
         setDataLocalStorage(JSON.parse(localStorage.getItem("favori")));
-        LocalStorage.current = JSON.parse(localStorage.getItem("favori"));
+        LocalStorage.current = localStorage.getItem("favori");
       }
     }
   }, [data]);
