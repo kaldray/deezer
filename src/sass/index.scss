@@ -1,44 +1,13 @@
 @import "bootstrap";
 @import "./reset";
 @import "./color.scss";
+@import "./customBootsrap";
+@import "./style";
 
-nav {
-  a {
-    &:hover {
-      color: white;
-      transform: scale(1.2);
-    }
-  }
-}
 
-.navbar-nav {
-  flex-direction: row;
-  align-items: center;
-}
 
-.btn {
-  background-color: $palette-color9;
-}
 
-.btn-primary {
-  border-color: $palette-color9 !important;
-  color: black;
-  &:hover,
-  &:active {
-    background-color: $palette-color9;
-    color: black;
-  }
-  &:focus {
-    background-color: $palette-color9;
-    color: black;
-    box-shadow: 0 0 0 0.25rem darken($palette-color9, 3%);
-  }
-}
 
-body {
-  height: 100%;
-}
 
-img {
-  object-position: center;
-}
+
+

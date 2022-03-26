@@ -1,0 +1,70 @@
+.navbar-nav {
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn {
+  background-color: $palette-color9;
+}
+
+.btn-primary {
+  border-color: $palette-color9;
+  color: black;
+  &:hover,
+  &:active,
+  &:focus-visible {
+    background-color: $palette-color9;
+    border-color: $palette-color9;
+    outline: transparent;
+    color: black;
+    cursor: pointer;
+  }
+  &:focus {
+    background-color: $palette-color9;
+    border-color: $palette-color9;
+
+    color: black;
+    box-shadow: 0 0 0 0.25rem darken($palette-color9, 3%);
+  }
+}
+
+.bg-dark {
+  border-radius: 12px 10px 0px 0px;
+}
+
+.form-control,
+.form-select {
+  &:focus {
+    border-color: inherit;
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  nav {
+    background-color: $dark;
+    a {
+      &:hover {
+        color: white;
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .bg-dark {
+    background-color: lighten($color: $dark, $amount: 4) !important;
+  }
+
+  .card-body {
+    background-color: $dark;
+    h5,
+    p {
+      color: $text-light-color;
+    }
+  }
+  .card {
+    border: 3px solid lighten($color: $dark, $amount: 4);
+    background-color: inherit;
+  }
+}

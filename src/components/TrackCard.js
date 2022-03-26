@@ -34,17 +34,14 @@ const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }) => {
         <span>Date de parution : {dataTrack.release_date}</span>
       </Col>
       <Col sm={12} lg={4} className="mt-3" style={textCenter}>
-        <Image
-          style={{ width: "100%" }}
-          src={dataTrack.album.cover_medium}
-        ></Image>
+        <Image style={{ width: "100%" }} src={dataTrack.album.cover_medium} />
         <span>Album : {dataTrack.album.title}</span>
       </Col>
       <Col sm={12} lg={4} className="mt-3" style={textCenter}>
         <Image
           style={{ width: "100%" }}
           src={dataTrack.artist.picture_medium}
-        ></Image>
+        />
         <span>Artiste : {dataTrack.artist.name}</span>
       </Col>
     </>

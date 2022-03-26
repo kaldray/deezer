@@ -1,0 +1,61 @@
+@font-face {
+  font-family: MabryDeezer;
+  src: url("./fonts/MabryDeezer-Regular.otf");
+}
+
+body {
+  font-family: MabryDeezer;
+}
+
+body {
+  height: 100%;
+}
+
+img {
+  object-position: center;
+}
+
+.form-label {
+  color: $text-light-color;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.link {
+  background-color: $palette-color6;
+  border-color: $palette-color6;
+
+  &:active,
+  &:hover {
+    background-color: $palette-color6;
+    border-color: $palette-color6;
+  }
+  &:focus,
+  &:focus-visible {
+    background-color: $palette-color6;
+    border-color: $palette-color6;
+    outline: transparent;
+    box-shadow: 0 0 0 0.25rem darken($palette-color6, 3%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: $dark;
+  }
+  svg {
+    fill: $text-light-color;
+    stroke: $text-light-color;
+  }
+  h1,
+  span,
+  p,
+  h2,
+  figcaption,
+  a {
+    color: $text-light-color;
+  }
+  audio {
+    background-color: $dark;
+  }
+}

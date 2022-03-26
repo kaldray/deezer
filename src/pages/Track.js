@@ -76,14 +76,12 @@ const Track = () => {
           <Col sm={12}>
             <figure
               sm={12}
-              className="d-flex gap-3 flex-column justify-content-center align-items-center"
+              className="d-flex gap-3 mb-5 flex-column justify-content-center align-items-center"
             >
               <figcaption>Ecouter l'extrait !</figcaption>
               <audio controls src={dataTrack.preview}></audio>
               <a style={{ color: "black" }} href={dataTrack.link}>
-                <Button>
-                  <figcaption>Ecouter l'extrait sur Deezer</figcaption>
-                </Button>
+                <Button className="link">Ecouter l'extrait sur Deezer</Button>
               </a>
             </figure>
           </Col>

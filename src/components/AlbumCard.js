@@ -3,19 +3,15 @@ import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-const AlbumCard = (props) => {
-  const { dataAlbum } = props;
+const AlbumCard = ({ dataAlbum }) => {
   const goToAlbumOnDeezer = () => {
     window.location.href = dataAlbum.link;
   };
   return (
     <>
       <Col className="d-flex justify-content-center align-items-center flex-column mt-3">
-        <h1 style={{ cursor: "pointer" }} onClick={goToAlbumOnDeezer}>
-          {dataAlbum.title}
-        </h1>
         <Link to={`/artist/${dataAlbum.artist.id}`}>
-          <h2 style={{ color: "black" }}>{dataAlbum.artist.name}</h2>
+          <h2>{dataAlbum.artist.name}</h2>
         </Link>
       </Col>
       <Col className="d-flex justify-content-center mt-3" sm={12} lg={12}>
@@ -35,9 +31,9 @@ const AlbumCard = (props) => {
         ))}
       </Col>
       <Col className="d-flex justify-content-center">
-        <Link style={{ color: "black" }} to={`/${dataAlbum.link}`}>
-          <Button>Aller vers la page de l'album sur Deezer</Button>
-        </Link>
+        <Button className="link" onClick={goToAlbumOnDeezer}>
+          Aller vers la page de l'album sur Deezer
+        </Button>
       </Col>
     </>
   );
