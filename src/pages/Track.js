@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import fetchJsonp from "fetch-jsonp";
 import TrackCard from "../components/TrackCard";
 import Row from "react-bootstrap/esm/Row";
@@ -10,6 +10,7 @@ import Button from "react-bootstrap/esm/Button";
 const Track = () => {
   const { id } = useParams();
   const [dataTrack, setDataTrack] = useState();
+  const navigate = useNavigate();
   const [isFavori, setIsFavori] = useState(false);
   let favArray = [];
 
@@ -17,7 +18,11 @@ const Track = () => {
     fetchJsonp(`https://api.deezer.com/track/${id}&output=jsonp`).then(
       (response) =>
         response.json().then((data) => {
-          setDataTrack(data);
+          if (data.error) {
+            navigate("/");
+          } else {
+            setDataTrack(data);
+          }
         })
     );
   }, [id]);

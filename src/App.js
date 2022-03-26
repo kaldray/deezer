@@ -10,11 +10,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/favorite" element={<Favorite />}></Route>
-          <Route path="/album/:id" element={<Album />}></Route>
-          <Route path="/track/:id" element={<Track />}></Route>
-          <Route path="/artist/:id" element={<Artist />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorite" element={<Favorite />} />
+          <Route path="/album/:id" element={<Album />} />
+          <Route path="/track/:id" element={<Track />} />
+          <Route path="/artist/:id" element={<Artist />} />
+          <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
