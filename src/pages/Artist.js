@@ -23,7 +23,7 @@ const Artist = () => {
   }, []);
   return (
     <>
-      <Navigation />;
+      <Navigation />
       <Row>{dataArtist && <ArtistCard dataArtist={dataArtist} />}</Row>
     </>
   );

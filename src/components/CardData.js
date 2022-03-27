@@ -79,12 +79,12 @@ const CardData = ({
               </Link>
               <Link to={`/album/${data.album.id}`}>
                 <Button size="sm" variant="primary">
-                  Consulter l'album.
+                  Voir fiche album.
                 </Button>
               </Link>
               <Link to={`/track/${data.id}`}>
                 <Button size="sm" variant="primary">
-                  Ecouter un extrait.
+                  Voir la fiche du titre.
                 </Button>
               </Link>
             </Stack>

@@ -2,8 +2,7 @@ import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 
-const ArtistCard = (props) => {
-  const { dataArtist } = props;
+const ArtistCard = ({ dataArtist }) => {
   const goToArtistOnDeezer = () => {
     window.location.href = dataArtist.link;
   };

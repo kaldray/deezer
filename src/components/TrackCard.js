@@ -1,8 +1,7 @@
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import { convertToMinutes } from "../utils/convertTime";
-import { ReactComponent as Heart } from "../assets/heart-svgrepo-com.svg";
-import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
+import Heart from "./Heart";
 
 const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }) => {
   const textCenter = {
@@ -21,14 +20,10 @@ const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }) => {
       >
         <div className="d-flex flex-row gap-3">
           <h1>Titre : {dataTrack.title}</h1>
-          {isFavori === false ? (
-            <Heart onClick={addOrRemoveFromLocalStorage} style={Heartstyle} />
-          ) : (
-            <HeartFull
-              onClick={addOrRemoveFromLocalStorage}
-              style={Heartstyle}
-            />
-          )}
+          <Heart
+            addOrRemoveFromLocalStorage={addOrRemoveFromLocalStorage}
+            isFavori={isFavori}
+          />
         </div>
         <span>Durée : {convertToMinutes(dataTrack.duration)}</span>
         <span>Date de parution : {dataTrack.release_date}</span>

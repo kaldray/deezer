@@ -15,12 +15,6 @@ img {
   object-position: center;
 }
 
-.form-label {
-  color: $text-light-color;
-  font-size: 2rem;
-  text-align: center;
-}
-
 .link {
   background-color: $palette-color6;
   border-color: $palette-color6;
@@ -57,5 +51,35 @@ img {
   }
   audio {
     background-color: $dark;
+  }
+  .form-label {
+    color: $text-light-color;
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: $light;
+  }
+  svg {
+    fill: $text-dark-color;
+    stroke: $text-dark-color;
+  }
+  h1,
+  span,
+  p,
+  h2,
+  figcaption,
+  a {
+    color: $text-dark-color;
+  }
+  audio {
+    background-color: $light;
+  }
+  .form-label {
+    color: $text-dark-color;
+    font-size: 2rem;
+    text-align: center;
   }
 }
