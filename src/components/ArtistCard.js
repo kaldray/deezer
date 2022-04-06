@@ -6,6 +6,11 @@ const ArtistCard = ({ dataArtist }) => {
   const goToArtistOnDeezer = () => {
     window.location.href = dataArtist.link;
   };
+
+  const numberWithSpaces = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
   return (
     <>
       <Col className="d-flex justify-content-center align-items-center flex-column mt-3">
@@ -20,7 +25,7 @@ const ArtistCard = ({ dataArtist }) => {
         lg={12}
       >
         <p>Nombre d'album : {dataArtist.nb_album}</p>
-        <p>Nombre de fans : {dataArtist.nb_fan}</p>
+        <p>Nombre de fans : {numberWithSpaces(dataArtist.nb_fan)}</p>
         <Button
           className="link"
           onClick={goToArtistOnDeezer}
