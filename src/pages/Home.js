@@ -74,6 +74,7 @@ const Home = () => {
     }
   };
 
+
   return (
     <>
       <Navigation />
@@ -89,7 +90,7 @@ const Home = () => {
                 ref={artisteInput}
                 onBlur={handleOptionChange}
                 type="input"
-                placeholder="Damso"
+                placeholder="Rechercher un titre, un album ..."
                 required
               />
             </Form.Group>

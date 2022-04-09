@@ -57,6 +57,29 @@ img {
     font-size: 2rem;
     text-align: center;
   }
+  body.light {
+    background-color: $light;
+    svg {
+      fill: $text-dark-color;
+      stroke: $text-dark-color;
+    }
+    h1,
+    span,
+    p,
+    h2,
+    figcaption,
+    a {
+      color: $text-dark-color;
+    }
+    audio {
+      background-color: $light;
+    }
+    .form-label {
+      color: $text-dark-color;
+      font-size: 2rem;
+      text-align: center;
+    }
+  }
 }
 @media (prefers-color-scheme: light) {
   body {
@@ -81,5 +104,28 @@ img {
     color: $text-dark-color;
     font-size: 2rem;
     text-align: center;
+  }
+  body.dark {
+    background-color: $dark;
+    svg {
+      fill: $text-light-color;
+      stroke: $text-light-color;
+    }
+    h1,
+    span,
+    p,
+    h2,
+    figcaption,
+    a {
+      color: $text-light-color;
+    }
+    audio {
+      background-color: $dark;
+    }
+    .form-label {
+      color: $text-light-color;
+      font-size: 2rem;
+      text-align: center;
+    }
   }
 }

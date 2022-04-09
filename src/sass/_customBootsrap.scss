@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.navbar {
+  flex-wrap: inherit !important;
+}
+
 .btn {
   background-color: $palette-color9;
 }
@@ -68,6 +72,33 @@
     border: 3px solid darken($color: $light, $amount: 5);
     background-color: inherit;
   }
+  body.dark {
+    nav {
+      background-color: $dark;
+      a {
+        &:hover {
+          color: $light;
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .bg-dark {
+      background-color: lighten($color: $dark, $amount: 4) !important;
+    }
+
+    .card-body {
+      background-color: $dark;
+      h5,
+      p {
+        color: $text-light-color;
+      }
+    }
+    .card {
+      border: 3px solid lighten($color: $dark, $amount: 4);
+      background-color: inherit;
+    }
+  }
 }
 @media (prefers-color-scheme: dark) {
   nav {
@@ -94,5 +125,33 @@
   .card {
     border: 3px solid lighten($color: $dark, $amount: 4);
     background-color: inherit;
+  }
+  body.light {
+    nav {
+      background-color: $dark;
+      a {
+        color: $dark;
+        &:hover {
+          color: $dark;
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .bg-dark {
+      background-color: darken($color: $light, $amount: 5) !important;
+    }
+
+    .card-body {
+      background-color: $light;
+      h5,
+      p {
+        color: $text-dark-color;
+      }
+    }
+    .card {
+      border: 3px solid darken($color: $light, $amount: 5);
+      background-color: inherit;
+    }
   }
 }
