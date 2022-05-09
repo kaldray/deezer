@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Navigation from "../components/Navbar";
+import { useState, useEffect } from "react";
+import Navigation from "../../components/Navbar";
 import { useParams, useNavigate } from "react-router-dom";
 import fetchJsonp from "fetch-jsonp";
-import TrackCard from "../components/TrackCard";
+import TrackCard from "./TrackCard";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
+import { DeezerSdkTrack } from "../../types/index";
 
 const Track = () => {
   const { id } = useParams();
-  const [dataTrack, setDataTrack] = useState();
+  const [dataTrack, setDataTrack] = useState<DeezerSdkTrack>();
   const navigate = useNavigate();
   const [isFavori, setIsFavori] = useState(false);
-  let favArray = [];
+  let favArray: DeezerSdk.Track[] = [];
 
   useEffect(() => {
     fetchJsonp(`https://api.deezer.com/track/${id}&output=jsonp`).then(
@@ -29,7 +30,9 @@ const Track = () => {
 
   useEffect(() => {
     if (localStorage.getItem("favori") !== "" && dataTrack !== undefined) {
-      let localStorageData = JSON.parse(localStorage.getItem("favori"));
+      let localStorageData: DeezerSdkTrack[] = JSON.parse(
+        localStorage.getItem("favori") || ""
+      );
       let checkIfExist = localStorageData.find((item) => {
         return item.id === dataTrack.id;
       });
@@ -42,23 +45,28 @@ const Track = () => {
   const addOrRemoveFromLocalStorage = () => {
     if (isFavori === false) {
       setIsFavori(!isFavori);
-      if (localStorage.getItem("favori") === "" && isFavori === false) {
+      if (
+        localStorage.getItem("favori") === "" &&
+        isFavori === false &&
+        dataTrack !== undefined
+      ) {
         favArray.push(dataTrack);
         localStorage.setItem("favori", JSON.stringify(favArray));
       } else if (
-        JSON.parse(localStorage.getItem("favori")).length >= 1 &&
-        isFavori === false
+        JSON.parse(localStorage.getItem("favori") || "").length >= 1 &&
+        isFavori === false &&
+        dataTrack !== undefined
       ) {
-        favArray = JSON.parse(localStorage.getItem("favori"));
+        favArray = JSON.parse(localStorage.getItem("favori") || "");
         let checkIfExist = favArray.find((item) => item.id === dataTrack.id);
         if (checkIfExist === undefined) {
           favArray.push(dataTrack);
           localStorage.setItem("favori", JSON.stringify(favArray));
         }
       }
-    } else if (isFavori === true) {
+    } else if (isFavori === true && dataTrack !== undefined) {
       setIsFavori(!isFavori);
-      favArray = JSON.parse(localStorage.getItem("favori"));
+      favArray = JSON.parse(localStorage.getItem("favori") || "");
       favArray = favArray.filter((item) => item.id !== dataTrack.id);
       localStorage.setItem("favori", JSON.stringify(favArray));
     }
@@ -67,7 +75,7 @@ const Track = () => {
   return (
     <>
       <Navigation />
-      <Row className="flex-row justify-content-center m-1 mt-5">
+      <Row className="flex-row justify-content-center mt-5">
         {dataTrack && (
           <TrackCard
             addOrRemoveFromLocalStorage={addOrRemoveFromLocalStorage}
@@ -79,10 +87,7 @@ const Track = () => {
       <Row className="mt-3 mb-5">
         {dataTrack && (
           <Col sm={12}>
-            <figure
-              sm={12}
-              className="d-flex gap-3 mb-5 flex-column justify-content-center align-items-center"
-            >
+            <figure className="d-flex gap-3 mb-5 flex-column justify-content-center align-items-center">
               <figcaption>Ecouter l'extrait !</figcaption>
               <audio controls src={dataTrack.preview}></audio>
               <a style={{ color: "black" }} href={dataTrack.link}>

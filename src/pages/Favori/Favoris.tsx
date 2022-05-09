@@ -1,22 +1,28 @@
-import Navigation from "../components/Navbar";
-import React, { useState, useEffect } from "react";
+import Navigation from "../../components/Navbar";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-import FavoriteTrack from "../components/FavoriteTrack";
+import FavoriteTrack from "./FavoriteTrack";
 const Favorite = () => {
-  const [getDataFromLocaleStorage, setDataFromLocaleStorage] = useState();
+  const [getDataFromLocaleStorage, setDataFromLocaleStorage] = useState<
+    DeezerSdk.Track[]
+  >([]);
   const [favoriToDelete, setfavoriToDelete] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("favori").length >= 1) {
-      setDataFromLocaleStorage(JSON.parse(localStorage.getItem("favori")));
+    if (localStorage.getItem("favori") !== null) {
+      setDataFromLocaleStorage(
+        JSON.parse(localStorage.getItem("favori") || "")
+      );
     }
   }, [favoriToDelete]);
 
-  const getItemToDelete = (data) => {
+  const getItemToDelete = (data: DeezerSdk.Track) => {
     let itemToDelete = data;
-    let dataLocalStorage = JSON.parse(localStorage.getItem("favori"));
+    let dataLocalStorage: DeezerSdk.Track[] = JSON.parse(
+      localStorage.getItem("favori") || ""
+    );
     let allFavorites = dataLocalStorage.filter(
       (item) => item.id !== itemToDelete.id
     );
@@ -38,7 +44,6 @@ const Favorite = () => {
                 <FavoriteTrack
                   data={data}
                   key={data.id}
-                  getDataFromLocaleStorage={getDataFromLocaleStorage}
                   getItemToDelete={getItemToDelete}
                 />
               ))}

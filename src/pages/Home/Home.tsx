@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
-import Navigation from "../components/Navbar";
+import Navigation from "../../components/Navbar";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import fetchJsonp from "fetch-jsonp";
-import CardData from "../components/CardData";
+import CardData from "./HomeCard";
+import { DeezerSdkTrack } from "../../types";
 
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
-  const [data, setData] = useState([]);
-  const [isFavori, setIsFavori] = useState(false);
-  const [dataLocalStorage, setDataLocalStorage] = useState([]);
-  const selectOption = useRef();
-  const artisteInput = useRef();
-  let allFavorites = [];
-  let LocalStorage = useRef();
+  const [data, setData] = useState<DeezerSdkTrack[]>([]);
+  const [dataLocalStorage, setDataLocalStorage] = useState<DeezerSdk.Track[]>(
+    []
+  );
+  const selectOption: React.RefObject<HTMLSelectElement> = useRef(null);
+  const artisteInput: React.RefObject<HTMLInputElement> = useRef(null);
+  let allFavorites: DeezerSdk.Track[] = [];
 
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
@@ -24,24 +25,25 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (dataLocalStorage === null || dataLocalStorage === "") {
+    if (dataLocalStorage === null) {
       return;
     } else {
-      if (localStorage.getItem("favori").length >= 1) {
-        setDataLocalStorage(JSON.parse(localStorage.getItem("favori")));
-        LocalStorage.current = localStorage.getItem("favori");
+      if (localStorage.getItem("favori")) {
+        setDataLocalStorage(JSON.parse(localStorage.getItem("favori") || ""));
       }
     }
   }, [data]);
 
   const handleOptionChange = () => {
-    setValueOption({
-      option: selectOption.current.value,
-      artiste: artisteInput.current.value,
-    });
+    if (selectOption.current && artisteInput.current) {
+      setValueOption({
+        option: selectOption.current.value,
+        artiste: artisteInput.current.value,
+      });
+    }
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (valueOption.option === "DEFAULT") {
       fetchJsonp(
@@ -73,7 +75,6 @@ const Home = () => {
         });
     }
   };
-
 
   return (
     <>
@@ -116,11 +117,8 @@ const Home = () => {
             data.map((data) => (
               <CardData
                 key={data.id}
-                isFavori={isFavori}
                 data={data}
                 dataLocalStorage={dataLocalStorage}
-                setIsFavori={setIsFavori}
-                LocalStorage={LocalStorage}
                 allFavorites={allFavorites}
                 setDataLocalStorage={setDataLocalStorage}
               />

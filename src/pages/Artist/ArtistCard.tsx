@@ -1,14 +1,16 @@
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import { DeezerSdkArtist } from "../../types";
+import { numberWithSpaces } from "../../function/index";
 
-const ArtistCard = ({ dataArtist }) => {
+type artistProps = {
+  dataArtist: DeezerSdkArtist;
+};
+
+const ArtistCard = ({ dataArtist }: artistProps) => {
   const goToArtistOnDeezer = () => {
     window.location.href = dataArtist.link;
-  };
-
-  const numberWithSpaces = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
   return (
@@ -17,7 +19,11 @@ const ArtistCard = ({ dataArtist }) => {
         <h1>{dataArtist.name}</h1>
       </Col>
       <Col className="d-flex justify-content-center mt-3" sm={12} lg={12}>
-        <Image rounded={true} src={dataArtist.picture_medium} />
+        <Image
+          rounded={true}
+          src={dataArtist.picture_medium}
+          alt="Pochette d'album"
+        />
       </Col>
       <Col
         className="d-flex justify-content-center mt-3 flex-column align-items-center"

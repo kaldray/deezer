@@ -1,10 +1,15 @@
 import { ReactComponent as HeartEmpty } from "../assets/heart-svgrepo-com.svg";
 import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
 
-const Heart = ({ isFavori, addOrRemoveFromLocalStorage, data }) => {
+type HeartSVG = {
+  isFavori: boolean;
+  addOrRemoveFromLocalStorage: (data: DeezerSdk.Track) => void;
+  data: DeezerSdk.Track;
+};
+
+const Heart = ({ isFavori, addOrRemoveFromLocalStorage, data }: HeartSVG) => {
   return (
     <>
-      {" "}
       {isFavori === true ? (
         <HeartFull
           onClick={() => addOrRemoveFromLocalStorage(data)}

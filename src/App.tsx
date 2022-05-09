@@ -1,9 +1,9 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Album from "./pages/Album";
-import Artist from "./pages/Artist";
-import Favorite from "./pages/Favoris";
-import Home from "./pages/Home";
-import Track from "./pages/Track";
+import Album from "./pages/Album/Album";
+import Artist from "./pages/Artist/Artist";
+import Favorite from "./pages/Favori/Favoris";
+import Home from "./pages/Home/Home";
+import Track from "./pages/Track/Track";
 
 function App() {
   return (

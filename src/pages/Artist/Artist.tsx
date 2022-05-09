@@ -1,14 +1,15 @@
-import Navigation from "../components/Navbar";
-import React, { useState, useEffect } from "react";
+import Navigation from "../../components/Navbar";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import fetchJsonp from "fetch-jsonp";
 import Row from "react-bootstrap/esm/Row";
-import ArtistCard from "../components/ArtistCard";
+import ArtistCard from "./ArtistCard";
+import { DeezerSdkArtist } from "../../types";
 
 const Artist = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [dataArtist, setDataArtist] = useState();
+  const [dataArtist, setDataArtist] = useState<DeezerSdkArtist>();
   useEffect(() => {
     fetchJsonp(`https://api.deezer.com/artist/${id}&output=jsonp`).then(
       (response) =>

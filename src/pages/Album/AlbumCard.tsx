@@ -2,8 +2,13 @@ import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { DeezerSdkAlbum } from "../../types";
 
-const AlbumCard = ({ dataAlbum }) => {
+type AlbumProps = {
+  dataAlbum: DeezerSdkAlbum;
+};
+
+const AlbumCard = ({ dataAlbum }: AlbumProps) => {
   const goToAlbumOnDeezer = () => {
     window.location.href = dataAlbum.link;
   };
@@ -15,7 +20,11 @@ const AlbumCard = ({ dataAlbum }) => {
         </Link>
       </Col>
       <Col className="d-flex justify-content-center mt-3" sm={12} lg={12}>
-        <Image rounded={true} src={dataAlbum.cover_medium} />
+        <Image
+          rounded={true}
+          src={dataAlbum.cover_medium}
+          alt="Pochette d'album"
+        />
       </Col>
       <Col
         className="d-flex flew-row flex-wrap mt-3 p-3 justify-content-center"

@@ -1,17 +1,24 @@
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
-import { convertToMinutes } from "../utils/convertTime";
-import Heart from "./Heart";
+import { DeezerSdkTrack } from "../../types";
+import { convertToMinutes } from "../../function";
+import Heart from "../../components/Heart";
 
-const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }) => {
-  const textCenter = {
+type TrackProps = {
+  dataTrack: DeezerSdkTrack;
+  addOrRemoveFromLocalStorage: () => void;
+  isFavori: boolean;
+};
+
+const TrackCard = ({
+  dataTrack,
+  addOrRemoveFromLocalStorage,
+  isFavori,
+}: TrackProps) => {
+  const textCenter: React.CSSProperties = {
     textAlign: "center",
   };
-  const Heartstyle = {
-    height: "25px",
-    cursor: "pointer",
-    alignSelf: "center",
-  };
+
   return (
     <>
       <Col
@@ -23,19 +30,25 @@ const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }) => {
           <Heart
             addOrRemoveFromLocalStorage={addOrRemoveFromLocalStorage}
             isFavori={isFavori}
+            data={dataTrack}
           />
         </div>
         <span>Durée : {convertToMinutes(dataTrack.duration)}</span>
         <span>Date de parution : {dataTrack.release_date}</span>
       </Col>
       <Col sm={12} lg={4} className="mt-3" style={textCenter}>
-        <Image style={{ width: "100%" }} src={dataTrack.album.cover_medium} />
+        <Image
+          style={{ width: "100%" }}
+          src={dataTrack.album.cover_medium}
+          alt="Pochette d'album"
+        />
         <span>Album : {dataTrack.album.title}</span>
       </Col>
       <Col sm={12} lg={4} className="mt-3" style={textCenter}>
         <Image
           style={{ width: "100%" }}
           src={dataTrack.artist.picture_medium}
+          alt="Pochette d'album"
         />
         <span>Artiste : {dataTrack.artist.name}</span>
       </Col>
