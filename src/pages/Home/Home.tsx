@@ -8,6 +8,7 @@ import fetchJsonp from "fetch-jsonp";
 import CardData from "./HomeCard";
 import { DeezerSdkTrack } from "../../types";
 import Loader from "../../components/Loader";
+import ScrollToTop from "../../components/BackToTop";
 
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
@@ -175,7 +176,7 @@ const Home = () => {
                 />
               )))}
         </Row>
-        {}
+        {nextResult && <ScrollToTop />}
       </Container>
     </>
   );

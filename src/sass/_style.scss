@@ -29,7 +29,7 @@ img {
     background-color: $palette-color6;
     border-color: $palette-color6;
     outline: transparent;
-    box-shadow: 0 0 0 0.25rem darken($palette-color6, 3%);
+    box-shadow: 0 0 0 0.25rem darken($palette-color6, 5%);
   }
 }
 
@@ -57,6 +57,31 @@ img {
     font-size: 2rem;
     text-align: center;
   }
+  .container-top {
+    box-shadow: 0 0 0 0.25rem lighten($dark, 3%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light;
+    position: fixed;
+    bottom: 10%;
+    right: 1%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .go-top {
+    margin-top: 0.5rem;
+    border-right: 2px solid $dark;
+    border-top: 2px solid $dark;
+    transform: rotate(-45deg);
+    height: 20px;
+    width: 20px;
+  }
   body.light {
     background-color: $light;
     svg {
@@ -78,6 +103,31 @@ img {
       color: $text-dark-color;
       font-size: 2rem;
       text-align: center;
+    }
+    .container-top {
+      box-shadow: 0 0 0 0.25rem lighten($dark, 3%);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $dark;
+      position: fixed;
+      bottom: 10%;
+      right: 1%;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .go-top {
+      margin-top: 0.5rem;
+      border-right: 2px solid $light;
+      border-top: 2px solid $light;
+      transform: rotate(-45deg);
+      height: 20px;
+      width: 20px;
     }
   }
 }
@@ -105,6 +155,31 @@ img {
     font-size: 2rem;
     text-align: center;
   }
+  .container-top {
+    box-shadow: 0 0 0 0.25rem lighten($dark, 3%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark;
+    position: fixed;
+    bottom: 10%;
+    right: 1%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .go-top {
+    margin-top: 0.5rem;
+    border-right: 2px solid $light;
+    border-top: 2px solid $light;
+    transform: rotate(-45deg);
+    height: 20px;
+    width: 20px;
+  }
   body.dark {
     background-color: $dark;
     svg {
@@ -126,6 +201,33 @@ img {
       color: $text-light-color;
       font-size: 2rem;
       text-align: center;
+    }
+
+    .container-top {
+      box-shadow: 0 0 0 0.25rem lighten($dark, 3%);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $light;
+      position: fixed;
+      bottom: 10%;
+      right: 1%;
+      border: transparent;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .go-top {
+      margin-top: 0.5rem;
+      border-right: 2px solid $dark;
+      border-top: 2px solid $dark;
+      transform: rotate(-45deg);
+      height: 20px;
+      width: 20px;
     }
   }
 }
