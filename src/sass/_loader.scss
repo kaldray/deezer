@@ -1,0 +1,22 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.loader {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  border: none;
+  border-top: 1px solid $palette-color9;
+  border-bottom: 1px solid $palette-color9;
+  animation: spin 2s infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

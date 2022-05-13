@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import fetchJsonp from "fetch-jsonp";
 import CardData from "./HomeCard";
 import { DeezerSdkTrack } from "../../types";
+import Loader from "../../components/Loader";
 
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
@@ -17,7 +18,10 @@ const Home = () => {
   const selectOption: React.RefObject<HTMLSelectElement> = useRef(null);
   const artisteInput: React.RefObject<HTMLInputElement> = useRef(null);
   let allFavorites: DeezerSdk.Track[] = [];
-
+  const [scrollPosition, setScrollPosition] = useState<number>();
+  const [windowHeigth, setWindowHeigth] = useState<number>();
+  const [nextResult, setNextResult] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
       localStorage.setItem("favori", "");
@@ -34,6 +38,34 @@ const Home = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    window.addEventListener("scroll", getScrollPosition);
+    if (
+      scrollPosition !== undefined &&
+      nextResult !== undefined &&
+      windowHeigth !== undefined &&
+      windowHeigth === scrollPosition
+    ) {
+      fetchJsonp(nextResult)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setIsLoading(true);
+          console.log(data);
+          setNextResult(data.next);
+          setData((prevSate) => [...prevSate, ...data.data]);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    return () => {
+      window.removeEventListener("scroll", getScrollPosition);
+    };
+  }, [windowHeigth]);
+
   const handleOptionChange = () => {
     if (selectOption.current && artisteInput.current) {
       setValueOption({
@@ -45,6 +77,7 @@ const Home = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     if (valueOption.option === "DEFAULT") {
       fetchJsonp(
         `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
@@ -53,13 +86,15 @@ const Home = () => {
           return response.json();
         })
         .then((data) => {
+          setNextResult(data.next);
           setData(data.data);
+          setIsLoading(false);
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-
     if (valueOption.option !== "Trier les résultats de la recherche par ...") {
       fetchJsonp(
         `https://api.deezer.com/search?q=${valueOption.artiste}&order=${valueOption.option}&output=jsonp`
@@ -68,7 +103,9 @@ const Home = () => {
           return response.json();
         })
         .then((data) => {
+          setNextResult(data.next);
           setData(data.data);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
@@ -76,6 +113,15 @@ const Home = () => {
     }
   };
 
+  const getScrollPosition: EventListener = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const documentHeigth = Math.ceil(document.documentElement.scrollHeight);
+    const windowHeight = Math.ceil(window.innerHeight);
+    let scroll = Math.ceil(window.scrollY);
+    setWindowHeigth(scroll);
+    setScrollPosition(documentHeigth - windowHeight);
+  };
   return (
     <>
       <Navigation />
@@ -113,17 +159,23 @@ const Home = () => {
       </Container>
       <Container style={{ paddingBottom: "5rem" }}>
         <Row>
-          {data &&
-            data.map((data) => (
-              <CardData
-                key={data.id}
-                data={data}
-                dataLocalStorage={dataLocalStorage}
-                allFavorites={allFavorites}
-                setDataLocalStorage={setDataLocalStorage}
-              />
-            ))}
+          {(isLoading && (
+            <div className="loader-container">
+              <Loader />
+            </div>
+          )) ||
+            (data &&
+              data.map((data) => (
+                <CardData
+                  key={data.id}
+                  data={data}
+                  dataLocalStorage={dataLocalStorage}
+                  allFavorites={allFavorites}
+                  setDataLocalStorage={setDataLocalStorage}
+                />
+              )))}
         </Row>
+        {}
       </Container>
     </>
   );
