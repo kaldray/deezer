@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Navigation from "../../components/Navbar";
@@ -23,6 +24,8 @@ const Home = () => {
   const [windowHeigth, setWindowHeigth] = useState<number>();
   const [nextResult, setNextResult] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [query, setQuery] = useSearchParams();
+  const location = useLocation();
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
       localStorage.setItem("favori", "");
@@ -67,6 +70,46 @@ const Home = () => {
     };
   }, [windowHeigth]);
 
+  useEffect(() => {
+    if (location.search.split("=").length === 2) {
+      setIsLoading(true);
+
+      const search = location.search.split("=").at(1);
+      fetchJsonp(`https://api.deezer.com/search?q=${search}&output=jsonp`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setNextResult(data.next);
+          setData(data.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setIsLoading(true);
+
+      const search = location.search.split("&");
+      fetchJsonp(
+        `https://api.deezer.com/search${search.at(0)}&${search.at(
+          1
+        )}&output=jsonp`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setNextResult(data.next);
+          setData(data.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   const handleOptionChange = () => {
     if (selectOption.current && artisteInput.current) {
       setValueOption({
@@ -79,39 +122,27 @@ const Home = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    if (valueOption.option === "DEFAULT") {
-      fetchJsonp(
-        `https://api.deezer.com/search?q=${valueOption.artiste}&output=jsonp`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setNextResult(data.next);
-          setData(data.data);
-          setIsLoading(false);
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    if (valueOption.option !== "Trier les résultats de la recherche par ...") {
-      fetchJsonp(
-        `https://api.deezer.com/search?q=${valueOption.artiste}&order=${valueOption.option}&output=jsonp`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setNextResult(data.next);
-          setData(data.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    fetchJsonp(
+      `https://api.deezer.com/search?q=${valueOption.artiste}&order=${valueOption.option}&output=jsonp`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setNextResult(data.next);
+        setData(data.data);
+        setIsLoading(false);
+        if (valueOption.option === "DEFAULT") {
+          setQuery(`q=${valueOption.artiste}`);
+        } else {
+          setQuery(`q=${valueOption.artiste}&order=${valueOption.option}`);
+        }
+        console.log(data);
+        console.log(query);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getScrollPosition: EventListener = (e: Event) => {
