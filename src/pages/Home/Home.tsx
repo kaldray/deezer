@@ -56,7 +56,6 @@ const Home = () => {
         })
         .then((data) => {
           setIsLoading(true);
-          console.log(data);
           setNextResult(data.next);
           setData((prevSate) => [...prevSate, ...data.data]);
           setIsLoading(false);
@@ -137,8 +136,6 @@ const Home = () => {
         } else {
           setQuery(`q=${valueOption.artiste}&order=${valueOption.option}`);
         }
-        console.log(data);
-        console.log(query);
       })
       .catch((error) => {
         console.log(error);
