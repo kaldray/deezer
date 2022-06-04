@@ -11,12 +11,14 @@ const Favorite = () => {
   const [favoriToDelete] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("favori") !== null) {
+    if (localStorage.getItem("favori")?.length !== undefined) {
       setDataFromLocaleStorage(
         JSON.parse(localStorage.getItem("favori") || "")
       );
     }
   }, [favoriToDelete]);
+
+  console.log(getDataFromLocaleStorage);
 
   const getItemToDelete = (data: DeezerSdk.Track) => {
     let itemToDelete = data;
@@ -39,14 +41,19 @@ const Favorite = () => {
             <h1>Mes favoris</h1>
           </Col>
           <Col className="d-flex  flex-wrap ">
-            {getDataFromLocaleStorage &&
+            {getDataFromLocaleStorage.length === 0 ? (
+              <Col className="d-flex justify-content-center mt-5" sm={12}>
+                <span>Vous n'avez actuellment pas de fovori</span>
+              </Col>
+            ) : (
               getDataFromLocaleStorage.map((data) => (
                 <FavoriteTrack
                   data={data}
                   key={data.id}
                   getItemToDelete={getItemToDelete}
                 />
-              ))}
+              ))
+            )}
           </Col>
         </Row>
       </Container>
