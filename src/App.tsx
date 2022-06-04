@@ -1,21 +1,17 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Album from "./pages/Album";
-import Artist from "./pages/Artist";
-import Favorite from "./pages/Favori";
-import Home from "./pages/Home";
-import Track from "./pages/Track";
+import * as Pages from "./pages";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/favorite" element={<Favorite />} />
-          <Route path="/album/:id" element={<Album />} />
-          <Route path="/track/:id" element={<Track />} />
-          <Route path="/artist/:id" element={<Artist />} />
-          <Route path="*" element={<Home />} />
+          <Route path="/" element={<Pages.Home />} />
+          <Route path="/favorite" element={<Pages.Favorite />} />
+          <Route path="/album/:id" element={<Pages.Album />} />
+          <Route path="/track/:id" element={<Pages.Track />} />
+          <Route path="/artist/:id" element={<Pages.Artist />} />
+          <Route path="*" element={<Pages.Home />} />
         </Routes>
       </BrowserRouter>
     </>
