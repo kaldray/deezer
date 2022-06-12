@@ -25,7 +25,7 @@ const TrackCard = ({
         className="d-flex justify-content-center flex-column align-items-center"
         sm={12}
       >
-        <div className="d-flex flex-row gap-3">
+        <div className="d-flex flex-row gap-3 align-items-center">
           <h1>Titre : {dataTrack.title}</h1>
           <Heart
             addOrRemoveFromLocalStorage={addOrRemoveFromLocalStorage}
