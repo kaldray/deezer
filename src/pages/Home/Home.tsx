@@ -70,42 +70,42 @@ const Home = () => {
   }, [windowHeigth]);
 
   useEffect(() => {
-    if (location.search.split("=").length === 2) {
-      setIsLoading(true);
-
-      const search = location.search.split("=").at(1);
-      fetchJsonp(`https://api.deezer.com/search?q=${search}&output=jsonp`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setNextResult(data.next);
-          setData(data.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      setIsLoading(true);
-
-      const search = location.search.split("&");
-      fetchJsonp(
-        `https://api.deezer.com/search${search.at(0)}&${search.at(
-          1
-        )}&output=jsonp`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setNextResult(data.next);
-          setData(data.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (location.search.length > 0) {
+      if (location.search.split("=").length === 2) {
+        setIsLoading(true);
+        const search = location.search.split("=").at(1);
+        fetchJsonp(`https://api.deezer.com/search?q=${search}&output=jsonp`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setNextResult(data.next);
+            setData(data.data);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        setIsLoading(true);
+        const search = location.search.split("&");
+        fetchJsonp(
+          `https://api.deezer.com/search${search.at(0)}&${search.at(
+            1
+          )}&output=jsonp`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setNextResult(data.next);
+            setData(data.data);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   }, []);
 
