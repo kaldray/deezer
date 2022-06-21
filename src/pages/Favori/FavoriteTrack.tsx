@@ -14,10 +14,7 @@ const FavoriteTrack = ({ data, getItemToDelete }: FavotiteProps) => {
         <span>
           {data.artist.name} •• {data.album.title}
         </span>
-        <Bin
-          onClick={() => getItemToDelete(data)}
-          style={{ cursor: "pointer" }}
-        />
+        <Bin onClick={() => getItemToDelete(data)} style={{ cursor: "pointer" }} />
       </Col>
     </>
   );

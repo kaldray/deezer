@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Navigation from "../../components/Navbar";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,15 +12,14 @@ const Artist = () => {
   const navigate = useNavigate();
   const [dataArtist, setDataArtist] = useState<DeezerSdkArtist>();
   useEffect(() => {
-    fetchJsonp(`https://api.deezer.com/artist/${id}&output=jsonp`).then(
-      (response) =>
-        response.json().then((data) => {
-          if (data.error) {
-            navigate("/");
-          } else {
-            setDataArtist(data);
-          }
-        })
+    fetchJsonp(`https://api.deezer.com/artist/${id}&output=jsonp`).then((response) =>
+      response.json().then((data) => {
+        if (data.error) {
+          navigate("/");
+        } else {
+          setDataArtist(data);
+        }
+      })
     );
   }, []);
   return (

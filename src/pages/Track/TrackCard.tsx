@@ -10,21 +10,14 @@ type TrackProps = {
   isFavori: boolean;
 };
 
-const TrackCard = ({
-  dataTrack,
-  addOrRemoveFromLocalStorage,
-  isFavori,
-}: TrackProps) => {
+const TrackCard = ({ dataTrack, addOrRemoveFromLocalStorage, isFavori }: TrackProps) => {
   const textCenter: React.CSSProperties = {
-    textAlign: "center",
+    textAlign: "center"
   };
 
   return (
     <>
-      <Col
-        className="d-flex justify-content-center flex-column align-items-center"
-        sm={12}
-      >
+      <Col className="d-flex justify-content-center flex-column align-items-center" sm={12}>
         <div className="d-flex flex-row gap-3 align-items-center">
           <h1>Titre : {dataTrack.title}</h1>
           <Heart

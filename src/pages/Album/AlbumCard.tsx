@@ -20,17 +20,9 @@ const AlbumCard = ({ dataAlbum }: AlbumProps) => {
         </Link>
       </Col>
       <Col className="d-flex justify-content-center mt-3" sm={12} lg={12}>
-        <Image
-          rounded={true}
-          src={dataAlbum.cover_medium}
-          alt="Pochette d'album"
-        />
+        <Image rounded={true} src={dataAlbum.cover_medium} alt="Pochette d'album" />
       </Col>
-      <Col
-        className="d-flex flew-row flex-wrap mt-3 p-3 justify-content-center"
-        sm={12}
-        lg={12}
-      >
+      <Col className="d-flex flew-row flex-wrap mt-3 p-3 justify-content-center" sm={12} lg={12}>
         {dataAlbum.tracks.data.map((track) => (
           <p className="m-1" key={track.id}>
             {" | "}

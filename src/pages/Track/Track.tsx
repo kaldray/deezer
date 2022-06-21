@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import Navigation from "../../components/Navbar";
 import { useParams, useNavigate } from "react-router-dom";
@@ -16,24 +17,21 @@ const Track = () => {
   let favArray: DeezerSdk.Track[] = [];
 
   useEffect(() => {
-    fetchJsonp(`https://api.deezer.com/track/${id}&output=jsonp`).then(
-      (response) =>
-        response.json().then((data) => {
-          if (data.error) {
-            navigate("/");
-          } else {
-            setDataTrack(data);
-          }
-        })
+    fetchJsonp(`https://api.deezer.com/track/${id}&output=jsonp`).then((response) =>
+      response.json().then((data) => {
+        if (data.error) {
+          navigate("/");
+        } else {
+          setDataTrack(data);
+        }
+      })
     );
   }, [id]);
 
   useEffect(() => {
     if (localStorage.getItem("favori") !== "" && dataTrack !== undefined) {
-      let localStorageData: DeezerSdkTrack[] = JSON.parse(
-        localStorage.getItem("favori") || ""
-      );
-      let checkIfExist = localStorageData.find((item) => {
+      const localStorageData: DeezerSdkTrack[] = JSON.parse(localStorage.getItem("favori") || "");
+      const checkIfExist = localStorageData.find((item) => {
         return item.id === dataTrack.id;
       });
       if (checkIfExist !== undefined) {
@@ -45,11 +43,7 @@ const Track = () => {
   const addOrRemoveFromLocalStorage = () => {
     if (isFavori === false) {
       setIsFavori(!isFavori);
-      if (
-        localStorage.getItem("favori") === "" &&
-        isFavori === false &&
-        dataTrack !== undefined
-      ) {
+      if (localStorage.getItem("favori") === "" && isFavori === false && dataTrack !== undefined) {
         favArray.push(dataTrack);
         localStorage.setItem("favori", JSON.stringify(favArray));
       } else if (
@@ -58,7 +52,7 @@ const Track = () => {
         dataTrack !== undefined
       ) {
         favArray = JSON.parse(localStorage.getItem("favori") || "");
-        let checkIfExist = favArray.find((item) => item.id === dataTrack.id);
+        const checkIfExist = favArray.find((item) => item.id === dataTrack.id);
         if (checkIfExist === undefined) {
           favArray.push(dataTrack);
           localStorage.setItem("favori", JSON.stringify(favArray));

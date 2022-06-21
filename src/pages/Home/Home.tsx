@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
@@ -14,18 +15,28 @@ import ScrollToTop from "../../components/BackToTop";
 const Home = () => {
   const [valueOption, setValueOption] = useState({ artiste: "", option: "" });
   const [data, setData] = useState<DeezerSdkTrack[]>([]);
-  const [dataLocalStorage, setDataLocalStorage] = useState<DeezerSdk.Track[]>(
-    []
-  );
+  const [dataLocalStorage, setDataLocalStorage] = useState<DeezerSdk.Track[]>([]);
   const selectOption: React.RefObject<HTMLSelectElement> = useRef(null);
   const artisteInput: React.RefObject<HTMLInputElement> = useRef(null);
-  let allFavorites: DeezerSdk.Track[] = [];
+  const allFavorites: DeezerSdk.Track[] = [];
   const [scrollPosition, setScrollPosition] = useState<number>();
   const [windowHeigth, setWindowHeigth] = useState<number>();
   const [nextResult, setNextResult] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [query, setQuery] = useSearchParams();
   const location = useLocation();
+
+  const getScrollPosition: EventListener = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const documentHeigth = Math.ceil(document.documentElement.scrollHeight);
+    const windowHeight = Math.ceil(window.innerHeight);
+    const scroll = Math.ceil(window.scrollY);
+    setWindowHeigth(scroll);
+    setScrollPosition(documentHeigth - windowHeight);
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("favori")) {
       localStorage.setItem("favori", "");
@@ -40,7 +51,7 @@ const Home = () => {
         setDataLocalStorage(JSON.parse(localStorage.getItem("favori") || ""));
       }
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", getScrollPosition);
@@ -48,16 +59,16 @@ const Home = () => {
       scrollPosition !== undefined &&
       nextResult !== undefined &&
       windowHeigth !== undefined &&
-      windowHeigth === scrollPosition
+      windowHeigth >= scrollPosition
     ) {
       fetchJsonp(nextResult)
         .then((response) => {
           return response.json();
         })
-        .then((data) => {
+        .then((res) => {
           setIsLoading(true);
-          setNextResult(data.next);
-          setData((prevSate) => [...prevSate, ...data.data]);
+          setNextResult(res.next);
+          setData((prevSate) => [...prevSate, ...res.data]);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -78,9 +89,9 @@ const Home = () => {
           .then((response) => {
             return response.json();
           })
-          .then((data) => {
-            setNextResult(data.next);
-            setData(data.data);
+          .then((res) => {
+            setNextResult(res.next);
+            setData(res.data);
             setIsLoading(false);
           })
           .catch((error) => {
@@ -89,17 +100,13 @@ const Home = () => {
       } else {
         setIsLoading(true);
         const search = location.search.split("&");
-        fetchJsonp(
-          `https://api.deezer.com/search${search.at(0)}&${search.at(
-            1
-          )}&output=jsonp`
-        )
+        fetchJsonp(`https://api.deezer.com/search${search.at(0)}&${search.at(1)}&output=jsonp`)
           .then((response) => {
             return response.json();
           })
-          .then((data) => {
-            setNextResult(data.next);
-            setData(data.data);
+          .then((res) => {
+            setNextResult(res.next);
+            setData(res.data);
             setIsLoading(false);
           })
           .catch((error) => {
@@ -113,7 +120,7 @@ const Home = () => {
     if (selectOption.current && artisteInput.current) {
       setValueOption({
         option: selectOption.current.value,
-        artiste: artisteInput.current.value,
+        artiste: artisteInput.current.value
       });
     }
   };
@@ -127,9 +134,9 @@ const Home = () => {
       .then((response) => {
         return response.json();
       })
-      .then((data) => {
-        setNextResult(data.next);
-        setData(data.data);
+      .then((res) => {
+        setNextResult(res.next);
+        setData(res.data);
         setIsLoading(false);
         if (valueOption.option === "DEFAULT") {
           setQuery(`q=${valueOption.artiste}`);
@@ -142,15 +149,6 @@ const Home = () => {
       });
   };
 
-  const getScrollPosition: EventListener = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const documentHeigth = Math.ceil(document.documentElement.scrollHeight);
-    const windowHeight = Math.ceil(window.innerHeight);
-    let scroll = Math.ceil(window.scrollY);
-    setWindowHeigth(scroll);
-    setScrollPosition(documentHeigth - windowHeight);
-  };
   return (
     <>
       <Navigation />
@@ -171,9 +169,7 @@ const Home = () => {
               />
             </Form.Group>
             <Form.Select onChange={handleOptionChange} ref={selectOption}>
-              <option value="DEFAULT">
-                Trier les résultats de la recherche par ...
-              </option>
+              <option value="DEFAULT">Trier les résultats de la recherche par ...</option>
               <option value="ALBUM_ASC">Album</option>
               <option value="ARTIST_ASC">Artiste</option>
               <option value="TRACK_ASC">Musique</option>
@@ -194,10 +190,10 @@ const Home = () => {
             </div>
           )) ||
             (data &&
-              data.map((data) => (
+              data.map((datas) => (
                 <CardData
-                  key={data.id}
-                  data={data}
+                  key={datas.id}
+                  data={datas}
                   dataLocalStorage={dataLocalStorage}
                   allFavorites={allFavorites}
                   setDataLocalStorage={setDataLocalStorage}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import fetchJsonp from "fetch-jsonp";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,24 +12,21 @@ const Album = () => {
   const navigate = useNavigate();
   const [dataAlbum, setDataAlbum] = useState<DeezerSdkAlbum>();
   useEffect(() => {
-    fetchJsonp(`https://api.deezer.com/album/${id}&output=jsonp`).then(
-      (response) =>
-        response.json().then((data) => {
-          if (data.error) {
-            navigate("/");
-          } else {
-            setDataAlbum(data);
-          }
-        })
+    fetchJsonp(`https://api.deezer.com/album/${id}&output=jsonp`).then((response) =>
+      response.json().then((data) => {
+        if (data.error) {
+          navigate("/");
+        } else {
+          setDataAlbum(data);
+        }
+      })
     );
   }, []);
 
   return (
     <>
       <Navigation />
-      <Row className="flex-column">
-        {dataAlbum && <AlbumCard dataAlbum={dataAlbum} />}
-      </Row>
+      <Row className="flex-column">{dataAlbum && <AlbumCard dataAlbum={dataAlbum} />}</Row>
     </>
   );
 };

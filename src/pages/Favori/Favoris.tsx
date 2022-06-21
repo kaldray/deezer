@@ -5,29 +5,21 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import FavoriteTrack from "./FavoriteTrack";
 const Favorite = () => {
-  const [getDataFromLocaleStorage, setDataFromLocaleStorage] = useState<
-    DeezerSdk.Track[]
-  >([]);
+  const [getDataFromLocaleStorage, setDataFromLocaleStorage] = useState<DeezerSdk.Track[]>([]);
   const [favoriToDelete] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("favori")?.length !== undefined) {
-      setDataFromLocaleStorage(
-        JSON.parse(localStorage.getItem("favori") || "")
-      );
+      setDataFromLocaleStorage(JSON.parse(localStorage.getItem("favori") || ""));
     }
   }, [favoriToDelete]);
 
   console.log(getDataFromLocaleStorage);
 
   const getItemToDelete = (data: DeezerSdk.Track) => {
-    let itemToDelete = data;
-    let dataLocalStorage: DeezerSdk.Track[] = JSON.parse(
-      localStorage.getItem("favori") || ""
-    );
-    let allFavorites = dataLocalStorage.filter(
-      (item) => item.id !== itemToDelete.id
-    );
+    const itemToDelete = data;
+    const dataLocalStorage: DeezerSdk.Track[] = JSON.parse(localStorage.getItem("favori") || "");
+    const allFavorites = dataLocalStorage.filter((item) => item.id !== itemToDelete.id);
     setDataFromLocaleStorage(allFavorites);
     localStorage.setItem("favori", JSON.stringify(allFavorites));
   };
@@ -47,11 +39,7 @@ const Favorite = () => {
               </Col>
             ) : (
               getDataFromLocaleStorage.map((data) => (
-                <FavoriteTrack
-                  data={data}
-                  key={data.id}
-                  getItemToDelete={getItemToDelete}
-                />
+                <FavoriteTrack data={data} key={data.id} getItemToDelete={getItemToDelete} />
               ))
             )}
           </Col>

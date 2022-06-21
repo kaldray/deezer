@@ -10,10 +10,7 @@ const Navigation = () => {
         <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Container>
-            <Navbar.Collapse
-              id="basic-navbar-nav"
-              className="justify-content-center"
-            >
+            <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
               <Nav className="flex justify-content-center">
                 <Link className="m-2" to="/">
                   Accueil

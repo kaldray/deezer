@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/Card";
@@ -15,12 +16,7 @@ interface HomeProps {
   setDataLocalStorage: React.Dispatch<React.SetStateAction<DeezerSdk.Track[]>>;
 }
 
-const CardData = ({
-  data,
-  dataLocalStorage,
-  allFavorites,
-  setDataLocalStorage,
-}: HomeProps) => {
+const CardData = ({ data, dataLocalStorage, allFavorites, setDataLocalStorage }: HomeProps) => {
   const [isFavori, setIsFavori] = useState(false);
 
   useEffect(() => {
@@ -33,18 +29,18 @@ const CardData = ({
     }
   }, []);
 
-  const addOrRemoveFromLocalStorage = (data: DeezerSdk.Track) => {
+  const addOrRemoveFromLocalStorage = (dataFromLocalStorage: DeezerSdk.Track) => {
     if (isFavori === false) {
       setIsFavori(!isFavori);
       if (localStorage.getItem("favori") === "") {
-        allFavorites.push(data);
+        allFavorites.push(dataFromLocalStorage);
         localStorage.setItem("favori", JSON.stringify(allFavorites));
         setDataLocalStorage(JSON.parse(localStorage.getItem("favori") || ""));
       } else if (JSON.parse(localStorage.getItem("favori") || "").length >= 1) {
         allFavorites = JSON.parse(localStorage.getItem("favori") || "");
-        let checkIfExist = allFavorites.find((item) => item.id === data.id);
+        const checkIfExist = allFavorites.find((item) => item.id === dataFromLocalStorage.id);
         if (checkIfExist === undefined) {
-          allFavorites.push(data);
+          allFavorites.push(dataFromLocalStorage);
           localStorage.setItem("favori", JSON.stringify(allFavorites));
           setDataLocalStorage(allFavorites);
         }
@@ -52,7 +48,7 @@ const CardData = ({
     } else if (isFavori === true) {
       setIsFavori(!isFavori);
       allFavorites = JSON.parse(localStorage.getItem("favori") || "");
-      allFavorites = allFavorites.filter((item) => item.id !== data.id);
+      allFavorites = allFavorites.filter((item) => item.id !== dataFromLocalStorage.id);
       localStorage.setItem("favori", JSON.stringify(allFavorites));
       setDataLocalStorage(JSON.parse(localStorage.getItem("favori") || ""));
     }
@@ -61,11 +57,7 @@ const CardData = ({
     <>
       <Col className="d-flex justify-content-center mb-5" sm={12} lg={4}>
         <Card style={{ width: "20rem" }}>
-          <Card.Img
-            variant="top"
-            src={data.album.cover_medium}
-            alt={"Pochette d'album"}
-          />
+          <Card.Img variant="top" src={data.album.cover_medium} alt={"Pochette d'album"} />
           <Card.Body>
             <Card.Title>{data.title}</Card.Title>
             <Card.Text>{data.artist.name}</Card.Text>
