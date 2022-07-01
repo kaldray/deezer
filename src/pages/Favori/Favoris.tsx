@@ -9,12 +9,10 @@ const Favorite = () => {
   const [favoriToDelete] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("favori")?.length !== undefined) {
+    if (localStorage.getItem("favori")?.length !== 0) {
       setDataFromLocaleStorage(JSON.parse(localStorage.getItem("favori") || ""));
     }
   }, [favoriToDelete]);
-
-  console.log(getDataFromLocaleStorage);
 
   const getItemToDelete = (data: DeezerSdk.Track) => {
     const itemToDelete = data;
