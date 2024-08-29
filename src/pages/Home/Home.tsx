@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import fetchJsonp from "fetch-jsonp";
 import CardData from "./HomeCard";
-import { DeezerSdkTrack } from "../../types";
+import type { DeezerSdkTrack } from "../../types";
 import Loader from "../../components/Loader";
 import ScrollToTop from "../../components/BackToTop";
 

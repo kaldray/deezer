@@ -1,5 +1,5 @@
-import { ReactComponent as HeartEmpty } from "../assets/heart-svgrepo-com.svg";
-import { ReactComponent as HeartFull } from "../assets/heart-svgrepo-com-2.svg";
+import { ReactComponent as HeartEmpty } from "@app/assets/heart-svgrepo-com.svg";
+import { ReactComponent as HeartFull } from "@app/assets/heart-svgrepo-com-2.svg";
 
 type HeartSVG = {
   isFavori: boolean;

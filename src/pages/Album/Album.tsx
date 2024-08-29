@@ -1,12 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import fetchJsonp from "fetch-jsonp";
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import Navigation from "../../components/Navbar";
+import { useEffect, useState } from "react";
 import Row from "react-bootstrap/esm/Row";
-
+import { useNavigate, useParams } from "react-router-dom";
+import Navigation from "../../components/Navbar";
+import type { DeezerSdkAlbum } from "../../types";
 import AlbumCard from "./AlbumCard";
-import { DeezerSdkAlbum } from "../../types";
+
 const Album = () => {
   const { id } = useParams();
   const navigate = useNavigate();

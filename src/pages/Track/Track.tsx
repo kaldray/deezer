@@ -7,7 +7,7 @@ import TrackCard from "./TrackCard";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
-import { DeezerSdkTrack } from "../../types/index";
+import type { DeezerSdkTrack } from "../../types/index";
 
 const Track = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import { DeezerSdkArtist } from "../../types";
+import type { DeezerSdkArtist } from "../../types";
 import { numberWithSpaces } from "../../function/index";
 
 type ArtistProps = {

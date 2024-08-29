@@ -1,8 +1,8 @@
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import { DeezerSdkAlbum } from "../../types";
+import type { DeezerSdkAlbum } from "../../types";
 
 type AlbumProps = {
   dataAlbum: DeezerSdkAlbum;

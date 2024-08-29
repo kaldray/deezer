@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import fetchJsonp from "fetch-jsonp";
 import Row from "react-bootstrap/esm/Row";
 import ArtistCard from "./ArtistCard";
-import { DeezerSdkArtist } from "../../types";
+import type { DeezerSdkArtist } from "../../types";
 
 const Artist = () => {
   const { id } = useParams();

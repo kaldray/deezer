@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { convertToMinutes } from "../../function";
 import Heart from "../../components/Heart";
-import { DeezerSdkTrack } from "../../types/index";
+import type { DeezerSdkTrack } from "../../types/index";
 
 interface HomeProps {
   data: DeezerSdkTrack;

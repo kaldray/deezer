@@ -1,6 +1,6 @@
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
-import { DeezerSdkTrack } from "../../types";
+import { type DeezerSdkTrack } from "../../types";
 import { convertToMinutes } from "../../function";
 import Heart from "../../components/Heart";
 
